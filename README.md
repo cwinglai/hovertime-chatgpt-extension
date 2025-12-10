@@ -1,6 +1,6 @@
 # chatgpt hovertime extension
 
-A Chrome extension that displays the exact date/time of each ChatGPT prompt you sent. Simply hover over any prompt to see its timestamp.
+A Chrome extension that displays the exact date/time/seconds of each ChatGPT prompt you sent. Simply hover over any prompt to see its timestamp.
 
 <img width="824" height="288" alt="Screenshot 2025-12-09 at 11 44 55 PM" src="https://github.com/user-attachments/assets/05b6e12f-c8dd-4a00-b366-685f1023675f" />
 
