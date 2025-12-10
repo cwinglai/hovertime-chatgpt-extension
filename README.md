@@ -1,4 +1,5 @@
 # chatgpt-timehover
 Chrome extension that displays a customizable timestamp for your ChatGPT prompts when you hover over them
 
-<img width="827" height="332" alt="Screenshot 2025-12-09 at 10 43 52 PM" src="https://github.com/user-attachments/assets/2547b526-a262-4f90-ae95-4e4cb2933e46" />
+
+<img width="818" height="283" alt="Screenshot 2025-12-09 at 10 45 56 PM" src="https://github.com/user-attachments/assets/109412d7-090c-4229-921e-8168f3421ad8" />
