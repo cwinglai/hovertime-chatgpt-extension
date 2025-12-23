@@ -7,6 +7,7 @@ const CONFIG = {
   },
   messageSelectors: [
     '[data-message-author-role="user"]',
+    '[data-message-id]',
     '.group.w-full.text-token-text-primary[data-testid*="conversation-turn"]',
     'div[class*="agent-turn"]:has(div[data-message-author-role="user"])'
   ],
@@ -100,7 +101,18 @@ async function saveTimestamps() {
 }
 
 function extractTimestampFromDOM(element) {
-  // Try multiple strategies to find timestamp
+  // Try React internal data structure first
+  const reactKey = Object.keys(element).find(k => k.startsWith('__reactFiber$'));
+  if (reactKey) {
+    const fiber = element[reactKey];
+    const messages = fiber?.return?.memoizedProps?.messages;
+    const timestamp = messages?.[0]?.create_time;
+    if (timestamp) {
+      return new Date(timestamp * 1000).toISOString();
+    }
+  }
+  
+  // Fallback to DOM timestamp extraction
   let timeEl = element.querySelector('time[datetime]');
   
   if (!timeEl) {
@@ -136,11 +148,24 @@ async function processMessage(messageElement) {
   
   if (!messageTimestamps[messageId]) {
     const domTimestamp = extractTimestampFromDOM(container);
-    messageTimestamps[messageId] = domTimestamp || new Date().toISOString();
-    await saveTimestamps();
+    if (domTimestamp) {
+      messageTimestamps[messageId] = domTimestamp;
+      await saveTimestamps();
+    } else {
+      // For new messages, wait for DOM to update before creating timestamp
+      setTimeout(async () => {
+        const delayedTimestamp = extractTimestampFromDOM(container);
+        if (delayedTimestamp && !messageTimestamps[messageId]) {
+          messageTimestamps[messageId] = delayedTimestamp;
+          await saveTimestamps();
+        }
+      }, 500);
+    }
   }
   
-  attachTimestampDisplay(container, messageId);
+  if (messageTimestamps[messageId]) {
+    attachTimestampDisplay(container, messageId);
+  }
 }
 
 function attachTimestampDisplay(messageElement, messageId) {
@@ -188,6 +213,28 @@ function attachTimestampDisplay(messageElement, messageId) {
 }
 
 function scanForMessages() {
+  // Scan for messages with data-message-id (React approach)
+  document.querySelectorAll('div[data-message-id]').forEach(div => {
+    if (div.dataset.timestampProcessed) return;
+    
+    const reactKey = Object.keys(div).find(k => k.startsWith('__reactFiber$'));
+    if (reactKey) {
+      const fiber = div[reactKey];
+      const messages = fiber?.return?.memoizedProps?.messages;
+      const timestamp = messages?.[0]?.create_time;
+      if (timestamp) {
+        const messageId = generateMessageId(div);
+        if (!messageTimestamps[messageId]) {
+          messageTimestamps[messageId] = new Date(timestamp * 1000).toISOString();
+          saveTimestamps();
+        }
+        attachTimestampDisplay(div, messageId);
+        div.dataset.timestampProcessed = 'true';
+      }
+    }
+  });
+  
+  // Fallback to original selectors
   CONFIG.messageSelectors.forEach(selector => {
     const messages = document.querySelectorAll(selector);
     messages.forEach(msg => {
@@ -203,6 +250,27 @@ function setupObserver() {
     mutations.forEach((mutation) => {
       mutation.addedNodes.forEach((node) => {
         if (node.nodeType === Node.ELEMENT_NODE) {
+          // Check for React messages first
+          if (node.matches && node.matches('div[data-message-id]')) {
+            setTimeout(() => {
+              const reactKey = Object.keys(node).find(k => k.startsWith('__reactFiber$'));
+              if (reactKey) {
+                const fiber = node[reactKey];
+                const messages = fiber?.return?.memoizedProps?.messages;
+                const timestamp = messages?.[0]?.create_time;
+                if (timestamp) {
+                  const messageId = generateMessageId(node);
+                  if (!messageTimestamps[messageId]) {
+                    messageTimestamps[messageId] = new Date(timestamp * 1000).toISOString();
+                    saveTimestamps();
+                  }
+                  attachTimestampDisplay(node, messageId);
+                }
+              }
+            }, 100);
+          }
+          
+          // Fallback to original processing
           if (isUserMessage(node)) processMessage(node);
           
           CONFIG.messageSelectors.forEach(selector => {
@@ -215,8 +283,7 @@ function setupObserver() {
       });
     });
     
-    // Re-scan when DOM changes (chat switching)
-    setTimeout(scanForMessages, 100);
+    setTimeout(scanForMessages, 500);
   }).observe(document.querySelector('main') || document.body, {
     childList: true,
     subtree: true
@@ -352,6 +419,12 @@ function createSettingsPanel() {
       <div class="setting-group">
         <div class="preview-box" id="timestamp-preview">
           <span class="timestamp-text" id="preview-text"></span>
+        </div>
+      </div>
+      
+      <div class="setting-group">
+        <div class="setting-row">
+          <button class="useless-btn" id="useless-button">Do Nothing</button>
         </div>
       </div>
     </div>
