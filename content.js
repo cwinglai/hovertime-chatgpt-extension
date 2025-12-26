@@ -191,7 +191,7 @@ function attachTimestampDisplay(messageElement, messageId) {
     timestampLabel.innerHTML = `<span class="timestamp-text">${formattedTime}</span>`;
     timestampLabel.style.color = currentSettings.color;
     
-    timestampLabel.style.position = 'absolute';
+    timestampLabel.style.position = 'absolute'; //overrides position: fixed
     timestampLabel.style.top = '-18px';
     timestampLabel.style.right = '0px';
     
