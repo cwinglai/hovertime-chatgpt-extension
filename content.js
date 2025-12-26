@@ -191,11 +191,12 @@ function attachTimestampDisplay(messageElement, messageId) {
     timestampLabel.innerHTML = `<span class="timestamp-text">${formattedTime}</span>`;
     timestampLabel.style.color = currentSettings.color;
     
-    const rect = messageElement.getBoundingClientRect();
-    timestampLabel.style.top = `${rect.top - 18}px`;
-    timestampLabel.style.right = `${window.innerWidth - rect.right}px`;
+    timestampLabel.style.position = 'absolute';
+    timestampLabel.style.top = '-18px';
+    timestampLabel.style.right = '0px';
     
-    document.body.appendChild(timestampLabel);
+    messageElement.style.position = 'relative';
+    messageElement.appendChild(timestampLabel);
     
     setTimeout(() => {
       timestampLabel.classList.add('visible');
