@@ -10,6 +10,12 @@ A Chrome extension that displays the exact date/time/seconds of each ChatGPT pro
 
 <img width="347" height="444" alt="Screenshot 2025-12-09 at 11 47 07 PM" src="https://github.com/user-attachments/assets/e9003058-3814-42ae-a31e-e6a9f3c325b6" />
 
+## Tech Stack
+- Manifest V3 Chrome Extension
+- JavaScript (Content Scripts)
+- CSS
+- Chrome Storage API
+
 ## Installation
 
 [Download from Chrome Web Store] (https://chromewebstore.google.com/detail/chatgpt-hovertime/kklkjniajpfcokigjhcolcbebminjfno)
