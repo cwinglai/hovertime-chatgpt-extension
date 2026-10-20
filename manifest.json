@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "ChatGPT HoverTime",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Exact timestamps for your ChatGPT messages. Hover over any prompt to view when it was sent with customizable date/time formats.",
   "host_permissions": ["https://chatgpt.com/*", "https://chat.openai.com/*"],
   "content_scripts": [
