@@ -33,7 +33,11 @@
   line-height: 1;
 }
 
-[data-message-author-role="user"], .group.w-full {
+[data-message-author-role="user"],
+.group.w-full,
+div[data-message-id],
+div[data-chatgpt-search-message-ids],
+[data-user-message-bubble="true"] {
   position: relative;
   overflow: visible !important;
 }
@@ -54,26 +58,36 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.15), -6px -6px 12px rgba(255, 255, 255, 0.8);
+  box-shadow:
+    6px 6px 12px rgba(0, 0, 0, 0.15),
+    -6px -6px 12px rgba(255, 255, 255, 0.8);
 }
 
 .chatgpt-timestamp-settings-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.2), -8px -8px 16px rgba(255, 255, 255, 0.9);
+  box-shadow:
+    8px 8px 16px rgba(0, 0, 0, 0.2),
+    -8px -8px 16px rgba(255, 255, 255, 0.9);
 }
 
 .chatgpt-timestamp-settings-btn:active {
   transform: translateY(1px);
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2), -3px -3px 6px rgba(255, 255, 255, 0.7);
+  box-shadow:
+    3px 3px 6px rgba(0, 0, 0, 0.2),
+    -3px -3px 6px rgba(255, 255, 255, 0.7);
 }
 
 @media (prefers-color-scheme: dark) {
   .chatgpt-timestamp-settings-btn {
-    box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3), -6px -6px 12px rgba(255, 255, 255, 0.05);
+    box-shadow:
+      6px 6px 12px rgba(0, 0, 0, 0.3),
+      -6px -6px 12px rgba(255, 255, 255, 0.05);
   }
-  
+
   .chatgpt-timestamp-settings-btn:hover {
-    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.4), -8px -8px 16px rgba(255, 255, 255, 0.08);
+    box-shadow:
+      8px 8px 16px rgba(0, 0, 0, 0.4),
+      -8px -8px 16px rgba(255, 255, 255, 0.08);
   }
 }
 
@@ -88,7 +102,9 @@
   -webkit-backdrop-filter: blur(25px) saturate(180%);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  box-shadow:
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
   overflow: hidden;
   z-index: 10001;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -99,18 +115,32 @@
   .chatgpt-timestamp-settings-panel {
     background: rgba(30, 30, 30, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 25px 50px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
   }
 }
 
 @keyframes fadeScale {
-  from { opacity: 0; transform: translateY(8px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes fadeScaleOut {
-  from { opacity: 1; transform: translateY(0) scale(1); }
-  to { opacity: 0; transform: translateY(8px) scale(0.98); }
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
 }
 
 .chatgpt-timestamp-settings-panel.closing {
@@ -202,12 +232,16 @@
   cursor: pointer;
   transition: all 0.2s;
   position: relative;
-  box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1), -3px -3px 6px rgba(255, 255, 255, 0.8);
+  box-shadow:
+    3px 3px 6px rgba(0, 0, 0, 0.1),
+    -3px -3px 6px rgba(255, 255, 255, 0.8);
 }
 
 .color-btn:hover {
   transform: scale(1.05);
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.15), -4px -4px 8px rgba(255, 255, 255, 0.9);
+  box-shadow:
+    4px 4px 8px rgba(0, 0, 0, 0.15),
+    -4px -4px 8px rgba(255, 255, 255, 0.9);
 }
 
 .color-btn:active {
@@ -217,21 +251,31 @@
 .color-btn.selected {
   transform: translateY(1px);
   border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.2), inset -1px -1px 2px rgba(255, 255, 255, 0.1), 1px 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    inset 2px 2px 4px rgba(0, 0, 0, 0.2),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.1),
+    1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
   .color-btn {
-    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3), -3px -3px 6px rgba(255, 255, 255, 0.05);
+    box-shadow:
+      3px 3px 6px rgba(0, 0, 0, 0.3),
+      -3px -3px 6px rgba(255, 255, 255, 0.05);
   }
-  
+
   .color-btn:hover {
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4), -4px -4px 8px rgba(255, 255, 255, 0.08);
+    box-shadow:
+      4px 4px 8px rgba(0, 0, 0, 0.4),
+      -4px -4px 8px rgba(255, 255, 255, 0.08);
   }
-  
+
   .color-btn.selected {
     border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: inset 2px 2px 4px rgba(0, 0, 0, 0.3), inset -1px -1px 2px rgba(255, 255, 255, 0.05), 1px 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow:
+      inset 2px 2px 4px rgba(0, 0, 0, 0.3),
+      inset -1px -1px 2px rgba(255, 255, 255, 0.05),
+      1px 1px 2px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -259,7 +303,7 @@
   .section-divider {
     background: rgba(75, 85, 99, 0.3);
   }
-  
+
   .section-icon {
     color: #9ca3af;
   }
@@ -286,7 +330,9 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.1), -4px -4px 8px rgba(255, 255, 255, 0.8);
+  box-shadow:
+    4px 4px 8px rgba(0, 0, 0, 0.1),
+    -4px -4px 8px rgba(255, 255, 255, 0.8);
   width: 80px;
   display: flex;
   align-items: center;
@@ -297,14 +343,18 @@
 .date-format-btn:hover,
 .show-date-btn:hover {
   transform: translateY(-1px);
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.15), -5px -5px 10px rgba(255, 255, 255, 0.9);
+  box-shadow:
+    5px 5px 10px rgba(0, 0, 0, 0.15),
+    -5px -5px 10px rgba(255, 255, 255, 0.9);
 }
 
 .time-format-btn:active,
 .date-format-btn:active,
 .show-date-btn:active {
   transform: translateY(1px);
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15), -2px -2px 4px rgba(255, 255, 255, 0.7);
+  box-shadow:
+    2px 2px 4px rgba(0, 0, 0, 0.15),
+    -2px -2px 4px rgba(255, 255, 255, 0.7);
 }
 
 .time-format-btn.active,
@@ -313,7 +363,10 @@
   background: #3b82f6;
   color: white;
   transform: translateY(1px);
-  box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.3), inset -1px -1px 2px rgba(255, 255, 255, 0.1), 1px 1px 2px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    inset 3px 3px 6px rgba(0, 0, 0, 0.3),
+    inset -1px -1px 2px rgba(255, 255, 255, 0.1),
+    1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -322,22 +375,29 @@
   .show-date-btn {
     background: #374151;
     color: #e5e7eb;
-    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3), -4px -4px 8px rgba(255, 255, 255, 0.05);
+    box-shadow:
+      4px 4px 8px rgba(0, 0, 0, 0.3),
+      -4px -4px 8px rgba(255, 255, 255, 0.05);
   }
-  
+
   .time-format-btn:hover,
   .date-format-btn:hover,
   .show-date-btn:hover {
-    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.4), -5px -5px 10px rgba(255, 255, 255, 0.08);
+    box-shadow:
+      5px 5px 10px rgba(0, 0, 0, 0.4),
+      -5px -5px 10px rgba(255, 255, 255, 0.08);
   }
-  
+
   .time-format-btn.active,
   .date-format-btn.active,
   .show-date-btn.active {
     background: #3b82f6;
     color: white;
     transform: translateY(1px);
-    box-shadow: inset 3px 3px 6px rgba(0, 0, 0, 0.4), inset -1px -1px 2px rgba(255, 255, 255, 0.05), 1px 1px 2px rgba(0, 0, 0, 0.2);
+    box-shadow:
+      inset 3px 3px 6px rgba(0, 0, 0, 0.4),
+      inset -1px -1px 2px rgba(255, 255, 255, 0.05),
+      1px 1px 2px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -387,7 +447,7 @@
   .settings-body::-webkit-scrollbar-thumb {
     background: #404040;
   }
-  
+
   .settings-body::-webkit-scrollbar-thumb:hover {
     background: #525252;
   }
